@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Advertising</title>
+    <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/node_modules/bootstrap/dist/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/app/style/style.css"/>
+</head>
+<body ng-app="advertising">
+<div class="container" ng-cloak>
+    <div class="header">
+        <ul class="nav nav-pills pull-right">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+        <h3 class="text-muted">Advertising</h3>
+    </div>
+    <div ng-controller="advertisingCtrl">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="jumbotron">
+                    <div class="container">
+                        <h1>Hello, user!</h1>
+                        <p>This simple marketing / informational application. Try to add your advert for our users.</p>
+                        <p><a class="btn btn-primary" role="button" ng-click="addAdvert()">Add advert</a></p>
+
+                        <form role="form" name="form" ng-submit="sendAdvert(advert)" ng-if="isAdvert" >
+                            <div class="form-group">
+                                <input ng-model="advert.title" type="text" class="form-control" placeholder="Write title for your advert" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea ng-model="advert.text" type="text" class="form-control" placeholder="Write some text" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input ng-model="advert.price" type="text" class="form-control" placeholder="Write price for your advert" required>
+                            </div>
+                            <div class="form-group">
+                                <input ng-model="advert.tags" type="text" class="form-control" placeholder="Write tags for your advert" required>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-success">Send advert</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <strong>Banners counter: {{adverts.length}}</strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="col-md-12 well" ng-repeat="advert in adverts track by $index">
+                    <h2>{{advert.title}}</h2>
+                    <p><strong>Price: </strong>{{advert.price}}</p>
+                    <p><strong>Description: </strong>{{advert.text}}</p>
+                    <p><strong>Tags: </strong>{{advert.tags}}</p>
+                    <button class="btn btn-danger btn-xs" ng-click="deleteAdvert(advert)">Delete advert</button>
+                    <button class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal" ng-click="openAdvert(advert)">Edit advert</button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <footer>
+            <p>© Advertising 2016</p>
+        </footer>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">You are editing advert {{advertForEdit.title}}</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form role="form" name="formEdit">
+                            <div class="form-group">
+                                <input ng-model="advertForEdit.title" type="text" class="form-control" placeholder="Write title for your advert" required>
+                            </div>
+                            <div class="form-group">
+                                <textarea ng-model="advertForEdit.text" type="text" class="form-control" placeholder="Write some text" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input ng-model="advertForEdit.price" type="text" class="form-control" placeholder="Write price for your advert" required>
+                            </div>
+                            <div class="form-group">
+                                <input ng-model="advertForEdit.tags" type="text" class="form-control" placeholder="Write tags for your advert" required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" ng-click="updateAdvert(advertForEdit)" data-dismiss="modal">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div> <!-- /container -->
+
+    <script src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="/node_modules/angular/angular.min.js"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/app/app.js"></script>
+    <script src="/app/controllers/advertisingCtrl.js"></script>
+    <script src="/app/services/advertsService.js"></script>
+</body>
+</html>
